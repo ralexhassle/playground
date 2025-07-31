@@ -1,0 +1,162 @@
+name: Fullstack Nx Monorepo
+description: |
+  Monorepo moderne avec Nx, React, Fastify, PostgreSQL et Drizzle ORM.
+  Architecture fullstack TypeScript avec types partagés et outils de développement.
+
+version: '1.0.0'
+created: '2025-07-31'
+
+architecture:
+  type: monorepo
+  tools:
+    - nx
+    - pnpm
+    - docker
+    - typescript
+
+projects:
+  frontend:
+    path: apps/frontend
+    type: react-application
+    description: Application React avec Vite et TypeScript
+    entry_points:
+      main: src/main.tsx
+      app: src/app/app.tsx
+      config: vite.config.ts
+    dependencies:
+      - react
+      - react-dom
+      - react-router-dom
+      - '@/types'
+    dev_server:
+      port: 4200
+      command: 'pnpm nx serve frontend'
+    build:
+      command: 'pnpm nx build frontend'
+      output: dist/apps/frontend
+
+  backend:
+    path: apps/backend
+    type: node-application
+    description: Serveur Node.js avec Fastify et Drizzle ORM
+    entry_points:
+      main: src/main.ts
+      database: src/db/connection.ts
+      schema: src/db/schema.ts
+      routes: src/routes/
+    dependencies:
+      - fastify
+      - '@fastify/cors'
+      - drizzle-orm
+      - postgres
+      - '@/types'
+    dev_server:
+      port: 3000
+      command: 'pnpm nx dev backend'
+      hot_reload: true
+      tool: tsx
+    build:
+      command: 'pnpm nx build backend'
+      output: dist/apps/backend
+    database:
+      type: postgresql
+      orm: drizzle
+      config: drizzle.config.ts
+
+  types:
+    path: libs/types
+    type: typescript-library
+    description: Types TypeScript partagés entre frontend et backend
+    entry_points:
+      main: src/index.ts
+    exports:
+      - PingResponse
+      - ApiInfo
+      - User
+      - CreateUserRequest
+      - UpdateUserRequest
+
+infrastructure:
+  database:
+    type: postgresql
+    version: '16-alpine'
+    container: fullstack-postgres
+    port: 5432
+    credentials:
+      database: fullstack_db
+      user: postgres
+      password: postgres
+    init_script: docker/postgres/init.sql
+
+  docker:
+    compose_file: docker-compose.yml
+    services:
+      - postgres
+      - backend (optional)
+      - adminer (optional)
+
+development:
+  requirements:
+    - Node.js 18+ (backend) / 20+ (frontend)
+    - pnpm
+    - Docker & Docker Compose
+
+  setup_commands:
+    - 'pnpm install'
+    - 'pnpm db:up'
+    - 'pnpm dev'
+
+  scripts:
+    start_all: 'pnpm dev'
+    start_frontend: 'pnpm frontend:dev'
+    start_backend: 'pnpm backend:dev'
+    start_db: 'pnpm db:up'
+    stop_db: 'pnpm db:down'
+    reset_db: 'pnpm db:reset'
+    format_code: 'pnpm format'
+    lint_code: 'pnpm lint'
+
+  tools:
+    linting: eslint
+    formatting: prettier
+    hot_reload:
+      frontend: vite
+      backend: tsx
+    database_introspection: 'pnpm db:studio'
+
+endpoints:
+  frontend: 'http://localhost:4200'
+  backend: 'http://localhost:3000'
+  database_admin: 'http://localhost:8080' # Adminer
+  api_docs:
+    ping: 'GET /ping'
+    api_info: 'GET /api/info'
+    users: 'GET,POST,PUT,DELETE /api/users'
+
+deployment:
+  docker:
+    frontend: 'Build avec nx et servir statiquement'
+    backend: 'docker/backend/Dockerfile'
+
+  environment_variables:
+    NODE_ENV: 'development|production'
+    PORT: '3000'
+    HOST: '0.0.0.0'
+    DATABASE_URL: 'postgresql://postgres:postgres@localhost:5432/fullstack_db'
+    LOG_LEVEL: 'info'
+
+future_integrations:
+  convex:
+    description: "Préparé pour l'intégration future avec Convex"
+    cli: '@convex-dev/cli'
+    setup: 'pnpm add convex && npx convex dev'
+
+notes: |
+  - Types partagés avec path mapping @/types
+  - Configuration multi-version Node avec .nvmrc
+  - Base PostgreSQL avec données d'exemple
+  - Hot reload activé sur frontend et backend
+  - Scripts de développement simples (pnpm dev)
+  - Configuration Docker complète
+  - Drizzle ORM avec exemples et introspection
+  - Architecture agent-friendly avec documentation complète

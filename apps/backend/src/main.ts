@@ -1,9 +1,10 @@
 import Fastify from 'fastify';
 import cors from '@fastify/cors';
 import * as dotenv from 'dotenv';
+import { resolve } from 'path';
 
 // Charger les variables d'environnement depuis le fichier .env à la racine
-dotenv.config({ path: '../../.env' });
+dotenv.config({ path: resolve(__dirname, '../../../.env') });
 
 import { PingResponse, ApiInfo, ApiEndpoint } from '@/types';
 import { testConnection } from './db/connection';

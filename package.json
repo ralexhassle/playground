@@ -23,6 +23,7 @@
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
     "docker:logs": "docker-compose logs -f",
+    "clean:ports": "./clean-ports.sh",
     "setup:github": "./prepare-github.sh",
     "test:integration": "./test-integration.sh",
     "check:all": "pnpm format:check && pnpm lint && pnpm build"

@@ -16,8 +16,8 @@ Un monorepo moderne et prêt à l'emploi avec Nx, React, Fastify et PostgreSQL.
 
 ```bash
 # 1. Cloner le repository
-git clone https://github.com/ralexhassle/monorepo-nx-fullstack.git
-cd monorepo-nx-fullstack
+git clone https://github.com/ralexhassle/playground.git
+cd playground
 
 # 2. Installer les dépendances
 pnpm install

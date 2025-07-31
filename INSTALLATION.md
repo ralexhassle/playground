@@ -25,8 +25,8 @@ git --version     # v2+
 ### 1. Cloner le repository
 
 ```bash
-git clone https://github.com/ralexhassle/monorepo-nx-fullstack.git
-cd monorepo-nx-fullstack
+git clone https://github.com/ralexhassle/playground.git
+cd playground
 ```
 
 ### 2. Installer les dépendances
@@ -162,7 +162,7 @@ pnpm test            # Tests unitaires (à configurer)
 ## 📚 Structure du Projet
 
 ```
-monorepo-nx-fullstack/
+playground/
 ├── apps/
 │   ├── frontend/          # React + Vite + TypeScript
 │   └── backend/           # Node.js + Fastify + Drizzle ORM

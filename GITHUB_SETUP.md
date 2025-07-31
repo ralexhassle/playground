@@ -45,7 +45,7 @@ git commit -m "🎉 Initial commit: Nx monorepo fullstack setup
 ### 2. Créer le repository sur GitHub
 
 1. Allez sur https://github.com/new
-2. Nom du repository : `monorepo-nx-fullstack` (ou votre choix)
+2. Nom du repository : `playground` (ou votre choix)
 3. Description : "🚀 Modern fullstack monorepo with Nx, React, Fastify, and PostgreSQL"
 4. Public ou Private selon vos préférences
 5. **Ne pas** initialiser avec README (on a déjà le nôtre)
@@ -54,7 +54,7 @@ git commit -m "🎉 Initial commit: Nx monorepo fullstack setup
 
 ```bash
 # Remplacez ralexhassle par votre nom d'utilisateur GitHub
-git remote add origin https://github.com/ralexhassle/monorepo-nx-fullstack.git
+git remote add origin https://github.com/ralexhassle/playground.git
 
 # Pousser le code
 git branch -M main
@@ -65,7 +65,7 @@ git push -u origin main
 
 ### Nom du Repository
 
-- `monorepo-nx-fullstack`
+- `playground`
 - `nx-react-fastify-starter`
 - `fullstack-typescript-monorepo`
 
@@ -98,7 +98,7 @@ Ajoutez ces badges au début de votre README.md :
 ## 📁 Structure Finale du Repository
 
 ```
-monorepo-nx-fullstack/
+playground/
 ├── 📁 .github/
 │   ├── copilot-instructions.md
 │   └── workflows/ (optionnel - CI/CD)
@@ -151,7 +151,7 @@ Après avoir publié sur GitHub :
 
 ```bash
 # Cloner le repository pour tester
-git clone https://github.com/ralexhassle/monorepo-nx-fullstack.git test-clone
+git clone https://github.com/ralexhassle/playground.git test-clone
 cd test-clone
 
 # Tester l'installation complète

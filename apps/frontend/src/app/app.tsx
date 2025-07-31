@@ -1,7 +1,10 @@
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import api from '../api';
 import styles from './app.module.css';
 import type { PingResponse, ApiInfo, User } from '@/types';
+import LoginPage from './login';
 
 function App() {
   const [backendStatus, setBackendStatus] = useState<
@@ -55,6 +58,9 @@ function App() {
           <Link to="/users" className={styles['nav-link']}>
             Utilisateurs
           </Link>
+          <Link to="/login" className={styles['nav-link']}>
+            Login
+          </Link>
         </nav>
         <div className={styles.status}>
           Status Backend:
@@ -78,6 +84,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage apiInfo={apiInfo} />} />
           <Route path="/users" element={<UsersPage />} />
+          <Route path="/login" element={<LoginPage />} />
         </Routes>
       </main>
     </div>
@@ -150,32 +157,24 @@ function HomePage({ apiInfo }: { apiInfo: ApiInfo | null }) {
 }
 
 function UsersPage() {
-  const [users, setUsers] = useState<User[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await fetch('http://localhost:3000/api/users');
-        if (response.ok) {
-          const data = await response.json();
-          setUsers(data);
-        } else {
-          setError('Erreur lors du chargement des utilisateurs');
-        }
-      } catch {
-        setError('Impossible de se connecter au backend');
-      } finally {
-        setLoading(false);
-      }
-    };
+  const {
+    data: users = [],
+    isLoading,
+    error,
+  } = useQuery<User[]>(['users'], async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/login');
+      return [];
+    }
+    const { data } = await api.get<User[]>('/api/users');
+    return data;
+  });
 
-    fetchUsers();
-  }, []);
-
-  if (loading) return <div>⏳ Chargement des utilisateurs...</div>;
-  if (error) return <div style={{ color: '#f87171' }}>❌ {error}</div>;
+  if (isLoading) return <div>⏳ Chargement des utilisateurs...</div>;
+  if (error) return <div style={{ color: '#f87171' }}>❌ {(error as any).message}</div>;
 
   return (
     <div>

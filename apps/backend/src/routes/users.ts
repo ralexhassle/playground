@@ -6,11 +6,13 @@
 import { FastifyInstance } from 'fastify';
 import { eq } from 'drizzle-orm';
 import { db } from '../db/connection';
-import { users, insertUserSchema } from '../db/schema';
+import { users } from '../db/schema';
+import { hashPassword } from '../utils/auth';
+import { authenticate } from '../utils/authenticate';
 
 export async function userRoutes(fastify: FastifyInstance) {
   // GET /api/users - Lister tous les utilisateurs
-  fastify.get('/api/users', async (request, reply) => {
+  fastify.get('/api/users', { preHandler: [authenticate] }, async (request, reply) => {
     try {
       const allUsers = await db.select().from(users);
       return reply.code(200).send(allUsers);
@@ -23,7 +25,7 @@ export async function userRoutes(fastify: FastifyInstance) {
   });
 
   // GET /api/users/:id - Récupérer un utilisateur par ID
-  fastify.get('/api/users/:id', async (request, reply) => {
+  fastify.get('/api/users/:id', { preHandler: [authenticate] }, async (request, reply) => {
     try {
       const { id } = request.params as { id: string };
       const user = await db
@@ -46,16 +48,16 @@ export async function userRoutes(fastify: FastifyInstance) {
   });
 
   // POST /api/users - Créer un nouvel utilisateur
-  fastify.post('/api/users', async (request, reply) => {
+  fastify.post('/api/users', { preHandler: [authenticate] }, async (request, reply) => {
     try {
-      // Validation des données avec le schéma Zod
-      const validatedData = insertUserSchema.parse(request.body);
+      const body = request.body as { email: string; name: string; password: string };
 
       const newUser = await db
         .insert(users)
         .values({
-          email: validatedData.email,
-          name: validatedData.name,
+          email: body.email,
+          name: body.name,
+          passwordHash: hashPassword(body.password),
         })
         .returning();
 
@@ -69,7 +71,7 @@ export async function userRoutes(fastify: FastifyInstance) {
   });
 
   // PUT /api/users/:id - Mettre à jour un utilisateur
-  fastify.put('/api/users/:id', async (request, reply) => {
+  fastify.put('/api/users/:id', { preHandler: [authenticate] }, async (request, reply) => {
     try {
       const { id } = request.params as { id: string };
       const body = request.body as { name?: string; email?: string };
@@ -102,7 +104,7 @@ export async function userRoutes(fastify: FastifyInstance) {
   });
 
   // DELETE /api/users/:id - Supprimer un utilisateur
-  fastify.delete('/api/users/:id', async (request, reply) => {
+  fastify.delete('/api/users/:id', { preHandler: [authenticate] }, async (request, reply) => {
     try {
       const { id } = request.params as { id: string };
 

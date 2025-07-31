@@ -5,11 +5,12 @@
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import * as dotenv from 'dotenv';
+import { resolve } from 'path';
 import * as schema from './schema';
 
 // Charger les variables d'environnement si pas déjà fait
 if (!process.env.DATABASE_URL) {
-  dotenv.config({ path: '../../.env' });
+  dotenv.config({ path: resolve(__dirname, '../../../.env') });
 }
 
 // Configuration de la connexion PostgreSQL

@@ -9,6 +9,7 @@ dotenv.config({ path: resolve(__dirname, '../../../.env') });
 import { PingResponse, ApiInfo, ApiEndpoint } from '@/types';
 import { testConnection } from './db/connection';
 import { userRoutes } from './routes/users';
+import { authRoutes } from './routes/auth';
 
 /**
  * Configuration du serveur Fastify
@@ -34,6 +35,7 @@ server.register(cors, {
 /**
  * Enregistrement des routes utilisateurs
  */
+server.register(authRoutes);
 server.register(userRoutes);
 
 /**
@@ -69,6 +71,7 @@ server.get<{ Reply: ApiInfo }>('/api/info', async (request, reply) => {
     { path: '/api/users', method: 'POST', description: 'Create new user' },
     { path: '/api/users/:id', method: 'PUT', description: 'Update user' },
     { path: '/api/users/:id', method: 'DELETE', description: 'Delete user' },
+    { path: '/api/auth/login', method: 'POST', description: 'User login' },
   ];
 
   const response: ApiInfo = {

@@ -143,6 +143,7 @@ pnpm docker:logs       # Voir les logs
 - `POST /api/users` - Créer un utilisateur
 - `PUT /api/users/:id` - Mettre à jour un utilisateur
 - `DELETE /api/users/:id` - Supprimer un utilisateur
+- `POST /api/auth/login` - Authentification utilisateur
 
 ## 🗄️ Base de données
 

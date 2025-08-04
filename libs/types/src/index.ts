@@ -46,6 +46,7 @@ export interface User {
   id: string;
   email: string;
   name: string;
+  passwordHash: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -56,6 +57,7 @@ export interface User {
 export interface CreateUserRequest {
   email: string;
   name: string;
+  password: string;
 }
 
 /**
@@ -64,6 +66,21 @@ export interface CreateUserRequest {
 export interface UpdateUserRequest {
   name?: string;
   email?: string;
+}
+
+/**
+ * Données pour la connexion utilisateur
+ */
+export interface LoginRequest {
+  email: string;
+  password: string;
+}
+
+/**
+ * Réponse lors de la connexion
+ */
+export interface LoginResponse {
+  token: string;
 }
 
 // ============================================================================

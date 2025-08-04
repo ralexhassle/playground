@@ -10,6 +10,12 @@ importers:
       '@fastify/cors':
         specifier: ^11.0.1
         version: 11.0.1
+      '@tanstack/react-query':
+        specifier: ^5.0.0
+        version: 5.84.1(react@19.0.0)
+      axios:
+        specifier: ^1.6.0
+        version: 1.11.0
       dotenv:
         specifier: ^17.2.1
         version: 17.2.1
@@ -3375,6 +3381,20 @@ packages:
         integrity: sha512-+PmQX0PiAYPMeVYe237LJAYvOMYW1j2rH5YROyS3b4CTVJum34HfRvKvAzozHAQG0TnHNdUfY9nCeUyRAs//cw==,
       }
     engines: { node: '>=14.16' }
+
+  '@tanstack/query-core@5.83.1':
+    resolution:
+      {
+        integrity: sha512-OG69LQgT7jSp+5pPuCfzltq/+7l2xoweggjme9vlbCPa/d7D7zaqv5vN/S82SzSYZ4EDLTxNO1PWrv49RAS64Q==,
+      }
+
+  '@tanstack/react-query@5.84.1':
+    resolution:
+      {
+        integrity: sha512-zo7EUygcWJMQfFNWDSG7CBhy8irje/XY0RDVKKV4IQJAysb+ZJkkJPcnQi+KboyGUgT+SQebRFoTqLuTtfoDLw==,
+      }
+    peerDependencies:
+      react: ^18 || ^19
 
   '@testing-library/dom@10.4.0':
     resolution:
@@ -12556,6 +12576,13 @@ snapshots:
   '@szmarczak/http-timer@5.0.1':
     dependencies:
       defer-to-connect: 2.0.1
+
+  '@tanstack/query-core@5.83.1': {}
+
+  '@tanstack/react-query@5.84.1(react@19.0.0)':
+    dependencies:
+      '@tanstack/query-core': 5.83.1
+      react: 19.0.0
 
   '@testing-library/dom@10.4.0':
     dependencies:

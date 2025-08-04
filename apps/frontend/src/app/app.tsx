@@ -163,18 +163,26 @@ function UsersPage() {
     data: users = [],
     isLoading,
     error,
-  } = useQuery<User[]>(['users'], async () => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      navigate('/login');
-      return [];
-    }
-    const { data } = await api.get<User[]>('/api/users');
-    return data;
+  } = useQuery({
+    queryKey: ['users'],
+    queryFn: async () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        navigate('/login');
+        return [];
+      }
+      const { data } = await api.get<User[]>('/api/users');
+      return data;
+    },
   });
 
   if (isLoading) return <div>⏳ Chargement des utilisateurs...</div>;
-  if (error) return <div style={{ color: '#f87171' }}>❌ {(error as any).message}</div>;
+  if (error)
+    return (
+      <div style={{ color: '#f87171' }}>
+        ❌ {error instanceof Error ? error.message : 'Erreur inconnue'}
+      </div>
+    );
 
   return (
     <div>

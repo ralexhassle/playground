@@ -19,10 +19,14 @@ export default function LoginPage() {
       return data;
     },
     onSuccess: data => {
-      localStorage.setItem('token', data.token);
-      navigate('/users');
+      if (data.token) {
+        localStorage.setItem('token', data.token);
+        navigate('/users');
+      } else {
+        setError('Aucun token reçu');
+      }
     },
-    onError: (err: any) => {
+    onError: (err: Error) => {
       setError(err.message || 'Erreur de connexion');
     },
   });

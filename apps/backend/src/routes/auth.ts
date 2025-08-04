@@ -16,17 +16,30 @@ export async function authRoutes(fastify: FastifyInstance) {
         .where(eq(users.email, email))
         .limit(1);
       if (user.length === 0) {
-        return reply.code(401).send({ error: 'Invalid credentials' } as any);
+        return reply
+          .code(401)
+          .send({ success: false, message: 'Invalid credentials' });
       }
       const valid = verifyPassword(password, user[0].passwordHash);
       if (!valid) {
-        return reply.code(401).send({ error: 'Invalid credentials' } as any);
+        return reply
+          .code(401)
+          .send({ success: false, message: 'Invalid credentials' });
       }
       const token = signToken(
         { id: user[0].id, email: user[0].email },
         process.env.JWT_SECRET || 'secret'
       );
-      return reply.send({ token });
+      return reply.send({
+        success: true,
+        token,
+        user: {
+          id: user[0].id,
+          name: user[0].name,
+          email: user[0].email,
+          createdAt: user[0].createdAt,
+        },
+      });
     }
   );
 }

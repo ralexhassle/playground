@@ -69,7 +69,7 @@ export interface UpdateUserRequest {
 }
 
 /**
- * Données pour la connexion utilisateur
+ * Requête de connexion
  */
 export interface LoginRequest {
   email: string;
@@ -80,7 +80,10 @@ export interface LoginRequest {
  * Réponse lors de la connexion
  */
 export interface LoginResponse {
-  token: string;
+  success: boolean;
+  token?: string;
+  user?: Pick<User, 'id' | 'name' | 'email' | 'createdAt'>;
+  message?: string;
 }
 
 // ============================================================================
@@ -132,6 +135,10 @@ export interface PaginatedResponse<T> {
     totalPages: number;
   };
 }
+
+// ============================================================================
+// Authentication
+// ============================================================================
 
 // ============================================================================
 // Configuration et Environment

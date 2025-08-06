@@ -1,6 +1,6 @@
 /**
- * Routes pour la gestion des utilisateurs
- * Démonstration de l'utilisation de Drizzle ORM
+ * User Management Routes
+ * Demonstrates Drizzle ORM usage with modern error handling
  */
 
 import { FastifyInstance } from 'fastify';
@@ -9,26 +9,27 @@ import { db } from '../db/connection';
 import { users } from '../db/schema';
 import { hashPassword } from '../utils/auth';
 import { authenticate } from '../utils/authenticate';
+import { ERROR_MESSAGES, HTTP_STATUS, SUCCESS_MESSAGES } from '../constants';
 
 export async function userRoutes(fastify: FastifyInstance) {
-  // GET /api/users - Lister tous les utilisateurs
+  // GET /api/users - List all users
   fastify.get(
     '/api/users',
     { preHandler: [authenticate] },
     async (request, reply) => {
       try {
         const allUsers = await db.select().from(users);
-        return reply.code(200).send(allUsers);
+        return reply.code(HTTP_STATUS.OK).send(allUsers);
       } catch (error) {
         request.log.error(error);
         return reply
-          .code(500)
-          .send({ error: 'Erreur lors de la récupération des utilisateurs' });
+          .code(HTTP_STATUS.INTERNAL_SERVER_ERROR)
+          .send({ error: ERROR_MESSAGES.DATABASE_ERROR });
       }
     }
   );
 
-  // GET /api/users/:id - Récupérer un utilisateur par ID
+  // GET /api/users/:id - Get user by ID
   fastify.get(
     '/api/users/:id',
     { preHandler: [authenticate] },
@@ -42,20 +43,22 @@ export async function userRoutes(fastify: FastifyInstance) {
           .limit(1);
 
         if (user.length === 0) {
-          return reply.code(404).send({ error: 'Utilisateur non trouvé' });
+          return reply
+            .code(HTTP_STATUS.NOT_FOUND)
+            .send({ error: ERROR_MESSAGES.USER_NOT_FOUND });
         }
 
-        return reply.code(200).send(user[0]);
+        return reply.code(HTTP_STATUS.OK).send(user[0]);
       } catch (error) {
         request.log.error(error);
         return reply
-          .code(500)
-          .send({ error: "Erreur lors de la récupération de l'utilisateur" });
+          .code(HTTP_STATUS.INTERNAL_SERVER_ERROR)
+          .send({ error: ERROR_MESSAGES.DATABASE_ERROR });
       }
     }
   );
 
-  // POST /api/users - Créer un nouvel utilisateur
+  // POST /api/users - Create new user
   fastify.post(
     '/api/users',
     { preHandler: [authenticate] },
@@ -76,17 +79,17 @@ export async function userRoutes(fastify: FastifyInstance) {
           })
           .returning();
 
-        return reply.code(201).send(newUser[0]);
+        return reply.code(HTTP_STATUS.CREATED).send(newUser[0]);
       } catch (error) {
         request.log.error(error);
         return reply
-          .code(500)
-          .send({ error: "Erreur lors de la création de l'utilisateur" });
+          .code(HTTP_STATUS.INTERNAL_SERVER_ERROR)
+          .send({ error: ERROR_MESSAGES.DATABASE_ERROR });
       }
     }
   );
 
-  // PUT /api/users/:id - Mettre à jour un utilisateur
+  // PUT /api/users/:id - Update user
   fastify.put(
     '/api/users/:id',
     { preHandler: [authenticate] },
@@ -95,17 +98,19 @@ export async function userRoutes(fastify: FastifyInstance) {
         const { id } = request.params as { id: string };
         const body = request.body as { name?: string; email?: string };
 
-        // Vérifier si l'utilisateur existe
+        // Check if user exists
         const existingUser = await db
           .select()
           .from(users)
           .where(eq(users.id, id))
           .limit(1);
         if (existingUser.length === 0) {
-          return reply.code(404).send({ error: 'Utilisateur non trouvé' });
+          return reply
+            .code(HTTP_STATUS.NOT_FOUND)
+            .send({ error: ERROR_MESSAGES.USER_NOT_FOUND });
         }
 
-        // Mettre à jour avec les nouvelles données
+        // Update with new data
         const updateData = { ...body, updatedAt: new Date() };
         const updatedUser = await db
           .update(users)
@@ -113,17 +118,17 @@ export async function userRoutes(fastify: FastifyInstance) {
           .where(eq(users.id, id))
           .returning();
 
-        return reply.code(200).send(updatedUser[0]);
+        return reply.code(HTTP_STATUS.OK).send(updatedUser[0]);
       } catch (error) {
         request.log.error(error);
         return reply
-          .code(500)
-          .send({ error: "Erreur lors de la mise à jour de l'utilisateur" });
+          .code(HTTP_STATUS.INTERNAL_SERVER_ERROR)
+          .send({ error: ERROR_MESSAGES.DATABASE_ERROR });
       }
     }
   );
 
-  // DELETE /api/users/:id - Supprimer un utilisateur
+  // DELETE /api/users/:id - Delete user
   fastify.delete(
     '/api/users/:id',
     { preHandler: [authenticate] },
@@ -137,17 +142,19 @@ export async function userRoutes(fastify: FastifyInstance) {
           .returning();
 
         if (deletedUser.length === 0) {
-          return reply.code(404).send({ error: 'Utilisateur non trouvé' });
+          return reply
+            .code(HTTP_STATUS.NOT_FOUND)
+            .send({ error: ERROR_MESSAGES.USER_NOT_FOUND });
         }
 
         return reply
-          .code(200)
-          .send({ message: 'Utilisateur supprimé avec succès' });
+          .code(HTTP_STATUS.OK)
+          .send({ message: SUCCESS_MESSAGES.USER_DELETED });
       } catch (error) {
         request.log.error(error);
         return reply
-          .code(500)
-          .send({ error: "Erreur lors de la suppression de l'utilisateur" });
+          .code(HTTP_STATUS.INTERNAL_SERVER_ERROR)
+          .send({ error: ERROR_MESSAGES.DATABASE_ERROR });
       }
     }
   );

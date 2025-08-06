@@ -1,28 +1,303 @@
 {
   "info": {
-    "name": "API Collection",
+    "name": "Monorepo Fullstack API",
+    "description": "Collection complète pour tester l'API du monorepo fullstack",
+    "version": "1.0.0",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
-  "item": [
-    {
-      "name": "Login",
-      "request": {
-        "method": "POST",
-        "header": [{ "key": "Content-Type", "value": "application/json" }],
-        "url": { "raw": "http://localhost:3000/api/auth/login" },
-        "body": {
-          "mode": "raw",
-          "raw": "{ \"email\": \"user@example.com\", \"password\": \"password\" }"
-        }
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{authToken}}",
+        "type": "string"
       }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
     },
     {
-      "name": "Get Users",
+      "key": "authToken",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
       "request": {
         "method": "GET",
-        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
-        "url": { "raw": "http://localhost:3000/api/users" }
-      }
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/ping",
+          "host": ["{{baseUrl}}"],
+          "path": ["ping"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "API Info",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/info",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "info"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    if (response.success && response.token) {",
+                  "        pm.collectionVariables.set('authToken', response.token);",
+                  "        pm.test('Login successful', () => {",
+                  "            pm.expect(response.success).to.be.true;",
+                  "            pm.expect(response.token).to.not.be.empty;",
+                  "        });",
+                  "    }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"admin123456\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "login"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login Test User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    if (response.success && response.token) {",
+                  "        pm.collectionVariables.set('authToken', response.token);",
+                  "    }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"test123456\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "login"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Register New User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"nouveau@example.com\",\n  \"name\": \"Nouvel Utilisateur\",\n  \"password\": \"motdepasse123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "register"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Get All Users",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get User by ID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/739343c1-2154-47b8-882f-ef60fa0ce0c5",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users", "739343c1-2154-47b8-882f-ef60fa0ce0c5"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create User",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"postman@example.com\",\n  \"name\": \"Postman User\",\n  \"password\": \"postman123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Nom Modifié\",\n  \"email\": \"email.modifie@example.com\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/users/739343c1-2154-47b8-882f-ef60fa0ce0c5",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users", "739343c1-2154-47b8-882f-ef60fa0ce0c5"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/5931ac34-21c2-4e7a-9380-48a96f96843b",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users", "5931ac34-21c2-4e7a-9380-48a96f96843b"]
+            }
+          },
+          "response": []
+        }
+      ]
     }
   ]
 }

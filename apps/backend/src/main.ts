@@ -3,17 +3,19 @@ import cors from '@fastify/cors';
 import * as dotenv from 'dotenv';
 import { resolve } from 'path';
 
-// Charger les variables d'environnement depuis le fichier .env à la racine
+// Load environment variables from root .env file
 dotenv.config({ path: resolve(__dirname, '../../../.env') });
 
 import { PingResponse, ApiInfo, ApiEndpoint } from '@/types';
 import { testConnection } from './db/connection';
 import { userRoutes } from './routes/users';
 import { authRoutes } from './routes/auth';
+import { setupErrorHandler } from './utils/error-handler';
+import { CORS_CONFIG, ENVIRONMENTS } from './constants';
 
 /**
- * Configuration du serveur Fastify
- * Utilise des variables d'environnement pour la configuration
+ * Fastify server configuration
+ * Uses environment variables for configuration
  */
 const server = Fastify({
   logger: {
@@ -22,28 +24,32 @@ const server = Fastify({
 });
 
 /**
- * Configuration CORS pour autoriser les requêtes depuis le frontend
+ * CORS configuration to allow requests from frontend
  */
 server.register(cors, {
-  origin: [
-    'http://localhost:4200', // Frontend en développement
-    'http://localhost:3000', // Autres configurations possibles
-  ],
+  origin: process.env.NODE_ENV === ENVIRONMENTS.PRODUCTION 
+    ? [...CORS_CONFIG.PRODUCTION_ORIGINS] 
+    : [...CORS_CONFIG.DEVELOPMENT_ORIGINS],
   credentials: true,
 });
 
 /**
- * Enregistrement des routes utilisateurs
+ * Global error handler setup
+ */
+setupErrorHandler(server);
+
+/**
+ * Register user routes
  */
 server.register(authRoutes);
 server.register(userRoutes);
 
 /**
- * Route de santé - endpoint /ping
- * Utilisé pour vérifier que le serveur fonctionne
+ * Health check endpoint - /ping
+ * Used to verify server is running and database connectivity
  */
 server.get<{ Reply: PingResponse }>('/ping', async (request, reply) => {
-  // Test de la connexion à la base de données
+  // Test database connection
   const dbConnected = await testConnection();
 
   const response: PingResponse = {
@@ -56,7 +62,7 @@ server.get<{ Reply: PingResponse }>('/ping', async (request, reply) => {
 });
 
 /**
- * Route d'informations sur l'API
+ * API information endpoint
  */
 server.get<{ Reply: ApiInfo }>('/api/info', async (request, reply) => {
   const endpoints: ApiEndpoint[] = [
@@ -71,7 +77,8 @@ server.get<{ Reply: ApiInfo }>('/api/info', async (request, reply) => {
     { path: '/api/users', method: 'POST', description: 'Create new user' },
     { path: '/api/users/:id', method: 'PUT', description: 'Update user' },
     { path: '/api/users/:id', method: 'DELETE', description: 'Delete user' },
-    { path: '/api/auth/login', method: 'POST', description: 'User login' },
+    { path: '/api/auth/login', method: 'POST', description: 'User authentication' },
+    { path: '/api/auth/register', method: 'POST', description: 'User registration' },
   ];
 
   const response: ApiInfo = {

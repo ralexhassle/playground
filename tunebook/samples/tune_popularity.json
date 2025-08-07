@@ -1,0 +1,402 @@
+[
+  {
+    "tune_id": "tune_001",
+    "popularity_score": 0.496,
+    "recording_count": 5,
+    "session_mentions": 2,
+    "alias_count": 1,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_002",
+    "popularity_score": 0.37,
+    "recording_count": 4,
+    "session_mentions": 2,
+    "alias_count": 0,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_003",
+    "popularity_score": 0.514,
+    "recording_count": 3,
+    "session_mentions": 3,
+    "alias_count": 1,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_004",
+    "popularity_score": 0.387,
+    "recording_count": 3,
+    "session_mentions": 0,
+    "alias_count": 0,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_005",
+    "popularity_score": 0.356,
+    "recording_count": 3,
+    "session_mentions": 4,
+    "alias_count": 0,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_006",
+    "popularity_score": 0.643,
+    "recording_count": 3,
+    "session_mentions": 4,
+    "alias_count": 3,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_007",
+    "popularity_score": 0.541,
+    "recording_count": 5,
+    "session_mentions": 4,
+    "alias_count": 1,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_008",
+    "popularity_score": 0.632,
+    "recording_count": 6,
+    "session_mentions": 5,
+    "alias_count": 3,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_009",
+    "popularity_score": 0.519,
+    "recording_count": 1,
+    "session_mentions": 1,
+    "alias_count": 1,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_010",
+    "popularity_score": 0.608,
+    "recording_count": 3,
+    "session_mentions": 1,
+    "alias_count": 2,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_011",
+    "popularity_score": 0.405,
+    "recording_count": 3,
+    "session_mentions": 1,
+    "alias_count": 0,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_012",
+    "popularity_score": 0.508,
+    "recording_count": 3,
+    "session_mentions": 2,
+    "alias_count": 1,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_013",
+    "popularity_score": 0.391,
+    "recording_count": 5,
+    "session_mentions": 2,
+    "alias_count": 0,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_014",
+    "popularity_score": 0.436,
+    "recording_count": 5,
+    "session_mentions": 3,
+    "alias_count": 0,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_015",
+    "popularity_score": 0.454,
+    "recording_count": 4,
+    "session_mentions": 3,
+    "alias_count": 1,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_016",
+    "popularity_score": 0.62,
+    "recording_count": 5,
+    "session_mentions": 2,
+    "alias_count": 2,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_017",
+    "popularity_score": 0.411,
+    "recording_count": 2,
+    "session_mentions": 1,
+    "alias_count": 0,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_018",
+    "popularity_score": 0.384,
+    "recording_count": 4,
+    "session_mentions": 1,
+    "alias_count": 0,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_019",
+    "popularity_score": 0.557,
+    "recording_count": 2,
+    "session_mentions": 2,
+    "alias_count": 3,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_020",
+    "popularity_score": 0.245,
+    "recording_count": 0,
+    "session_mentions": 5,
+    "alias_count": 1,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_021",
+    "popularity_score": 0.35,
+    "recording_count": 4,
+    "session_mentions": 1,
+    "alias_count": 0,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_022",
+    "popularity_score": 0.431,
+    "recording_count": 4,
+    "session_mentions": 3,
+    "alias_count": 0,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_023",
+    "popularity_score": 0.423,
+    "recording_count": 1,
+    "session_mentions": 1,
+    "alias_count": 0,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_024",
+    "popularity_score": 0.382,
+    "recording_count": 3,
+    "session_mentions": 5,
+    "alias_count": 0,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_025",
+    "popularity_score": 0.404,
+    "recording_count": 3,
+    "session_mentions": 5,
+    "alias_count": 0,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_026",
+    "popularity_score": 0.455,
+    "recording_count": 2,
+    "session_mentions": 0,
+    "alias_count": 1,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_027",
+    "popularity_score": 0.388,
+    "recording_count": 5,
+    "session_mentions": 1,
+    "alias_count": 0,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_028",
+    "popularity_score": 0.357,
+    "recording_count": 6,
+    "session_mentions": 3,
+    "alias_count": 0,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_029",
+    "popularity_score": 0.409,
+    "recording_count": 2,
+    "session_mentions": 5,
+    "alias_count": 0,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_030",
+    "popularity_score": 0.644,
+    "recording_count": 3,
+    "session_mentions": 5,
+    "alias_count": 2,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_031",
+    "popularity_score": 0.414,
+    "recording_count": 4,
+    "session_mentions": 4,
+    "alias_count": 0,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_032",
+    "popularity_score": 0.496,
+    "recording_count": 3,
+    "session_mentions": 3,
+    "alias_count": 1,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_033",
+    "popularity_score": 0.606,
+    "recording_count": 1,
+    "session_mentions": 4,
+    "alias_count": 2,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_034",
+    "popularity_score": 0.372,
+    "recording_count": 4,
+    "session_mentions": 4,
+    "alias_count": 0,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_035",
+    "popularity_score": 0.357,
+    "recording_count": 4,
+    "session_mentions": 1,
+    "alias_count": 0,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_036",
+    "popularity_score": 0.511,
+    "recording_count": 1,
+    "session_mentions": 4,
+    "alias_count": 1,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_037",
+    "popularity_score": 0.578,
+    "recording_count": 5,
+    "session_mentions": 1,
+    "alias_count": 2,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_038",
+    "popularity_score": 0.631,
+    "recording_count": 3,
+    "session_mentions": 5,
+    "alias_count": 2,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_039",
+    "popularity_score": 0.499,
+    "recording_count": 3,
+    "session_mentions": 2,
+    "alias_count": 1,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_040",
+    "popularity_score": 0.375,
+    "recording_count": 4,
+    "session_mentions": 5,
+    "alias_count": 0,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_041",
+    "popularity_score": 0.461,
+    "recording_count": 3,
+    "session_mentions": 1,
+    "alias_count": 1,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_042",
+    "popularity_score": 0.585,
+    "recording_count": 3,
+    "session_mentions": 1,
+    "alias_count": 2,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_043",
+    "popularity_score": 0.471,
+    "recording_count": 4,
+    "session_mentions": 4,
+    "alias_count": 1,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_044",
+    "popularity_score": 0.055,
+    "recording_count": 0,
+    "session_mentions": 4,
+    "alias_count": 0,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_045",
+    "popularity_score": 0.358,
+    "recording_count": 3,
+    "session_mentions": 4,
+    "alias_count": 0,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_046",
+    "popularity_score": 0.393,
+    "recording_count": 5,
+    "session_mentions": 0,
+    "alias_count": 0,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_047",
+    "popularity_score": 0.363,
+    "recording_count": 5,
+    "session_mentions": 2,
+    "alias_count": 0,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_048",
+    "popularity_score": 0.6,
+    "recording_count": 4,
+    "session_mentions": 4,
+    "alias_count": 2,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_049",
+    "popularity_score": 0.374,
+    "recording_count": 3,
+    "session_mentions": 2,
+    "alias_count": 0,
+    "setting_count": 1
+  },
+  {
+    "tune_id": "tune_050",
+    "popularity_score": 0.362,
+    "recording_count": 5,
+    "session_mentions": 4,
+    "alias_count": 0,
+    "setting_count": 1
+  }
+]

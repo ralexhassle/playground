@@ -48,4 +48,7 @@ Thumbs.db
 .github/instructions/nx.instructions.md
 
 vite.config.*.timestamp*
+
+# Tunebook data files (too large for git)
+tunebook/processed_*.json
 vitest.config.*.timestamp*

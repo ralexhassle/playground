@@ -1,0 +1,480 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.544172,
+          51.883081
+        ]
+      },
+      "properties": {
+        "name": "O'Sullivan Pub",
+        "longitude": -8.544172,
+        "latitude": 51.883081,
+        "id": "session_001",
+        "town": "Cork",
+        "area": "Cork",
+        "country": "Ireland"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.199599,
+          53.3615
+        ]
+      },
+      "properties": {
+        "name": "The Killarney Lodge",
+        "longitude": -6.199599,
+        "latitude": 53.3615,
+        "id": "session_002",
+        "town": "Dublin",
+        "area": "Dublin",
+        "country": "Ireland"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.298183,
+          51.764672
+        ]
+      },
+      "properties": {
+        "name": "Connemara Pub",
+        "longitude": -8.298183,
+        "latitude": 51.764672,
+        "id": "session_003",
+        "town": "Cork",
+        "area": "Cork",
+        "country": "Ireland"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.88528,
+          54.637883
+        ]
+      },
+      "properties": {
+        "name": "O'Doyle House",
+        "longitude": -5.88528,
+        "latitude": 54.637883,
+        "id": "session_004",
+        "town": "Belfast",
+        "area": "Belfast",
+        "country": "Ireland"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.26461,
+          53.423133
+        ]
+      },
+      "properties": {
+        "name": "The Connemara Community Centre",
+        "longitude": -6.26461,
+        "latitude": 53.423133,
+        "id": "session_005",
+        "town": "Dublin",
+        "area": "Dublin",
+        "country": "Ireland"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.034825,
+          54.595675
+        ]
+      },
+      "properties": {
+        "name": "Lively Fiddler Inn",
+        "longitude": -6.034825,
+        "latitude": 54.595675,
+        "id": "session_006",
+        "town": "Belfast",
+        "area": "Belfast",
+        "country": "Ireland"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.248858,
+          51.795148
+        ]
+      },
+      "properties": {
+        "name": "The Wild Cobbler",
+        "longitude": -8.248858,
+        "latitude": 51.795148,
+        "id": "session_007",
+        "town": "Cork",
+        "area": "Cork",
+        "country": "Ireland"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.97948,
+          53.337943
+        ]
+      },
+      "properties": {
+        "name": "Young Dancer Music Hall",
+        "longitude": -8.97948,
+        "latitude": 53.337943,
+        "id": "session_008",
+        "town": "Galway",
+        "area": "Galway",
+        "country": "Ireland"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.68504,
+          54.669015
+        ]
+      },
+      "properties": {
+        "name": "O'Gallagher Community Centre",
+        "longitude": -5.68504,
+        "latitude": 54.669015,
+        "id": "session_009",
+        "town": "Belfast",
+        "area": "Belfast",
+        "country": "Ireland"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.990258,
+          54.6166
+        ]
+      },
+      "properties": {
+        "name": "O'Murphy Centre",
+        "longitude": -5.990258,
+        "latitude": 54.6166,
+        "id": "session_010",
+        "town": "Belfast",
+        "area": "Belfast",
+        "country": "Ireland"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.117462,
+          53.217022
+        ]
+      },
+      "properties": {
+        "name": "O'McGrath Club",
+        "longitude": -6.117462,
+        "latitude": 53.217022,
+        "id": "session_011",
+        "town": "Dublin",
+        "area": "Dublin",
+        "country": "Ireland"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.922874,
+          54.602944
+        ]
+      },
+      "properties": {
+        "name": "O'Reilly Community Centre",
+        "longitude": -5.922874,
+        "latitude": 54.602944,
+        "id": "session_012",
+        "town": "Belfast",
+        "area": "Belfast",
+        "country": "Ireland"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.356501,
+          51.986101
+        ]
+      },
+      "properties": {
+        "name": "Lonesome Reel Community Centre",
+        "longitude": -8.356501,
+        "latitude": 51.986101,
+        "id": "session_013",
+        "town": "Cork",
+        "area": "Cork",
+        "country": "Ireland"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.971274,
+          54.525319
+        ]
+      },
+      "properties": {
+        "name": "Lonesome Reel Pub",
+        "longitude": -5.971274,
+        "latitude": 54.525319,
+        "id": "session_014",
+        "town": "Belfast",
+        "area": "Belfast",
+        "country": "Ireland"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.226313,
+          51.850767
+        ]
+      },
+      "properties": {
+        "name": "Mayo Community Centre",
+        "longitude": -8.226313,
+        "latitude": 51.850767,
+        "id": "session_015",
+        "town": "Cork",
+        "area": "Cork",
+        "country": "Ireland"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.183658,
+          53.251572
+        ]
+      },
+      "properties": {
+        "name": "Cork Lodge",
+        "longitude": -6.183658,
+        "latitude": 53.251572,
+        "id": "session_016",
+        "town": "Dublin",
+        "area": "Dublin",
+        "country": "Ireland"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.31722,
+          53.349242
+        ]
+      },
+      "properties": {
+        "name": "The Achill House",
+        "longitude": -6.31722,
+        "latitude": 53.349242,
+        "id": "session_017",
+        "town": "Dublin",
+        "area": "Dublin",
+        "country": "Ireland"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.121799,
+          53.142913
+        ]
+      },
+      "properties": {
+        "name": "O'Doyle Centre",
+        "longitude": -9.121799,
+        "latitude": 53.142913,
+        "id": "session_018",
+        "town": "Galway",
+        "area": "Galway",
+        "country": "Ireland"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.476869,
+          51.82605
+        ]
+      },
+      "properties": {
+        "name": "Bold Reel Lodge",
+        "longitude": -8.476869,
+        "latitude": 51.82605,
+        "id": "session_019",
+        "town": "Cork",
+        "area": "Cork",
+        "country": "Ireland"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.023663,
+          54.448083
+        ]
+      },
+      "properties": {
+        "name": "The Old Blackbird",
+        "longitude": -6.023663,
+        "latitude": 54.448083,
+        "id": "session_020",
+        "town": "Belfast",
+        "area": "Belfast",
+        "country": "Ireland"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.434057,
+          53.276703
+        ]
+      },
+      "properties": {
+        "name": "O'Walsh House",
+        "longitude": -6.434057,
+        "latitude": 53.276703,
+        "id": "session_021",
+        "town": "Dublin",
+        "area": "Dublin",
+        "country": "Ireland"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.259753,
+          53.346798
+        ]
+      },
+      "properties": {
+        "name": "O'Byrne Hotel",
+        "longitude": -6.259753,
+        "latitude": 53.346798,
+        "id": "session_022",
+        "town": "Dublin",
+        "area": "Dublin",
+        "country": "Ireland"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.482127,
+          51.862184
+        ]
+      },
+      "properties": {
+        "name": "The Donegal Bar",
+        "longitude": -8.482127,
+        "latitude": 51.862184,
+        "id": "session_023",
+        "town": "Cork",
+        "area": "Cork",
+        "country": "Ireland"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.003917,
+          54.596739
+        ]
+      },
+      "properties": {
+        "name": "The Foggy Dancer",
+        "longitude": -6.003917,
+        "latitude": 54.596739,
+        "id": "session_024",
+        "town": "Belfast",
+        "area": "Belfast",
+        "country": "Ireland"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.833381,
+          54.703284
+        ]
+      },
+      "properties": {
+        "name": "Foggy Cobbler Community Centre",
+        "longitude": -5.833381,
+        "latitude": 54.703284,
+        "id": "session_025",
+        "town": "Belfast",
+        "area": "Belfast",
+        "country": "Ireland"
+      }
+    }
+  ]
+}

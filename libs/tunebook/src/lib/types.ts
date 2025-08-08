@@ -422,3 +422,14 @@ export interface ProcessingConfig {
     number_of_replicas: number;
   };
 }
+
+// ===== USER ENTITIES =====
+
+export interface User {
+  id: string;
+  name: string;
+  username?: string;
+  member_id?: string;
+  location?: string;
+  joined_date?: string;
+}

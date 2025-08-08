@@ -145,6 +145,65 @@ pnpm docker:logs       # Voir les logs
 - `DELETE /api/users/:id` - Supprimer un utilisateur
 - `POST /api/auth/login` - Authentification utilisateur
 
+## 🎵 Tunebook - Playground de données
+
+Le monorepo inclut un système complet pour explorer les données de [TheSession.org](https://thesession.org) :
+
+### Structure Tunebook
+
+```
+libs/tunebook/              # Bibliothèque partagée
+├── src/lib/types.ts        # Types TypeScript pour les données irlandaises
+├── src/lib/utils.ts        # Utilitaires de traitement
+└── src/lib/data-processor.ts # Processeur de données
+
+apps/tunebook-playground/   # Application interactive
+├── src/main.ts            # Interface CLI interactive
+├── data/                  # Données JSON (non versionnées)
+└── scripts/download-data.js # Script de téléchargement
+```
+
+### Utilisation rapide
+
+```bash
+# Télécharger les données de TheSession.org (optionnel)
+pnpm tunebook:download
+
+# Lancer le playground interactif
+pnpm tunebook:playground
+
+# Afficher les statistiques rapides
+pnpm tunebook:stats
+```
+
+### Playground interactif
+
+Le playground offre une interface de commandes pour explorer :
+
+- **47,000+ mélodies irlandaises** en notation ABC
+- **Sets de mélodies** pour sessions de musique
+- **Enregistrements** avec discographie
+- **Sessions** géolocalisées dans le monde entier
+- **Utilisateurs** contributeurs de la communauté
+
+```bash
+tunebook> search "blackbird"     # Rechercher des mélodies
+tunebook> tunes jig 10          # Afficher 10 gigues
+tunebook> random                # Mélodie aléatoire
+tunebook> sessions              # Sessions de musique
+tunebook> help                  # Aide complète
+```
+
+### Types partagés
+
+Les types Tunebook sont disponibles via `@monorepo/tunebook` :
+
+```typescript
+import type { Tune, TuneSet, Recording, Session } from '@monorepo/tunebook';
+```
+
+**📖 Documentation complète** : [apps/tunebook-playground/README.md](./apps/tunebook-playground/README.md)
+
 ## 🗄️ Base de données
 
 ### Drizzle ORM

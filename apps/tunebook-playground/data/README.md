@@ -7,6 +7,7 @@ This directory contains the real JSON data files from [TheSession.org](https://g
 Download the data files from: https://github.com/adactio/TheSession-data/tree/main/json
 
 The following files are expected:
+
 - `recordings.json` - Recording information
 - `sessions.json` - Session data with geographic information
 - `sets.json` - Tune sets data

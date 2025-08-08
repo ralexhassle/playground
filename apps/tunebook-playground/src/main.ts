@@ -4,15 +4,15 @@ import { existsSync, readFileSync } from 'fs';
 import { resolve } from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import readline from 'readline';
+import * as readline from 'readline';
 
 // Import types and utilities from the shared tunebook library
-import type { 
-  Tune, 
-  TuneSet, 
-  Recording, 
-  Session, 
-  User 
+import type {
+  Tune,
+  TuneSet,
+  Recording,
+  Session,
+  User,
 } from '@monorepo/tunebook';
 
 // Get the current directory
@@ -54,13 +54,13 @@ class TunebookPlayground implements DataLoader {
    */
   private loadData(): void {
     console.log('📂 Loading data...');
-    
+
     this.tunes = this.loadJsonFile('tunes.json', []);
     this.sets = this.loadJsonFile('sets.json', []);
     this.recordings = this.loadJsonFile('recordings.json', []);
     this.sessions = this.loadJsonFile('sessions.json', []);
     this.users = this.loadJsonFile('users.json', []);
-    
+
     console.log('✅ Data loaded successfully!\n');
     this.stats();
   }
@@ -70,12 +70,16 @@ class TunebookPlayground implements DataLoader {
    */
   private loadJsonFile<T>(filename: string, defaultValue: T): T {
     const filePath = resolve(this.dataDir, filename);
-    
+
     if (existsSync(filePath)) {
       try {
         const data = readFileSync(filePath, 'utf-8');
         const parsed = JSON.parse(data);
-        console.log(`   ✓ ${filename}: ${Array.isArray(parsed) ? parsed.length : 'loaded'} items`);
+        console.log(
+          `   ✓ ${filename}: ${
+            Array.isArray(parsed) ? parsed.length : 'loaded'
+          } items`
+        );
         return parsed;
       } catch (error) {
         console.log(`   ⚠️  ${filename}: Error loading file, using default`);
@@ -90,11 +94,21 @@ class TunebookPlayground implements DataLoader {
   /**
    * Public interface methods
    */
-  loadTunes(): Tune[] { return this.tunes; }
-  loadSets(): TuneSet[] { return this.sets; }
-  loadRecordings(): Recording[] { return this.recordings; }
-  loadSessions(): Session[] { return this.sessions; }
-  loadUsers(): User[] { return this.users; }
+  loadTunes(): Tune[] {
+    return this.tunes;
+  }
+  loadSets(): TuneSet[] {
+    return this.sets;
+  }
+  loadRecordings(): Recording[] {
+    return this.recordings;
+  }
+  loadSessions(): Session[] {
+    return this.sessions;
+  }
+  loadUsers(): User[] {
+    return this.users;
+  }
 
   /**
    * Display data statistics
@@ -114,7 +128,7 @@ class TunebookPlayground implements DataLoader {
   async startInteractive(): Promise<void> {
     const rl = readline.createInterface({
       input: process.stdin,
-      output: process.stdout
+      output: process.stdout,
     });
 
     console.log('🎮 Interactive Mode - Available Commands:');
@@ -128,7 +142,7 @@ class TunebookPlayground implements DataLoader {
     console.log('   exit           - Exit playground\n');
 
     const prompt = () => {
-      rl.question('tunebook> ', (input) => {
+      rl.question('tunebook> ', input => {
         this.processCommand(input.trim(), rl, prompt);
       });
     };
@@ -139,7 +153,11 @@ class TunebookPlayground implements DataLoader {
   /**
    * Process interactive commands
    */
-  private processCommand(input: string, rl: readline.Interface, prompt: () => void): void {
+  private processCommand(
+    input: string,
+    rl: readline.Interface,
+    prompt: () => void
+  ): void {
     const [command, ...args] = input.split(' ');
 
     switch (command.toLowerCase()) {
@@ -179,7 +197,9 @@ class TunebookPlayground implements DataLoader {
 
       default:
         if (input) {
-          console.log(`❌ Unknown command: ${command}. Type 'help' for available commands.`);
+          console.log(
+            `❌ Unknown command: ${command}. Type 'help' for available commands.`
+          );
         }
         break;
     }
@@ -192,18 +212,31 @@ class TunebookPlayground implements DataLoader {
    */
   private listTunes(type?: string, limit: number = 10): void {
     let filtered = this.tunes;
-    
+
     if (type) {
-      filtered = this.tunes.filter(tune => 
+      filtered = this.tunes.filter(tune =>
         tune.type?.toLowerCase().includes(type.toLowerCase())
       );
-      console.log(`🎵 Tunes of type "${type}" (showing ${Math.min(limit, filtered.length)} of ${filtered.length}):`);
+      console.log(
+        `🎵 Tunes of type "${type}" (showing ${Math.min(
+          limit,
+          filtered.length
+        )} of ${filtered.length}):`
+      );
     } else {
-      console.log(`🎵 All Tunes (showing ${Math.min(limit, filtered.length)} of ${filtered.length}):`);
+      console.log(
+        `🎵 All Tunes (showing ${Math.min(limit, filtered.length)} of ${
+          filtered.length
+        }):`
+      );
     }
 
     filtered.slice(0, limit).forEach((tune, index) => {
-      console.log(`   ${index + 1}. ${tune.name} (${tune.type}) - ${tune.meter} - by ${tune.username}`);
+      console.log(
+        `   ${index + 1}. ${tune.name} (${tune.type}) - ${tune.meter} - by ${
+          tune.username
+        }`
+      );
     });
     console.log();
   }
@@ -221,11 +254,15 @@ class TunebookPlayground implements DataLoader {
       tune.name?.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    console.log(`🔍 Search results for "${searchTerm}" (${results.length} found):`);
+    console.log(
+      `🔍 Search results for "${searchTerm}" (${results.length} found):`
+    );
     results.slice(0, 10).forEach((tune, index) => {
-      console.log(`   ${index + 1}. ${tune.name} (${tune.type}) - ${tune.meter}`);
+      console.log(
+        `   ${index + 1}. ${tune.name} (${tune.type}) - ${tune.meter}`
+      );
     });
-    
+
     if (results.length > 10) {
       console.log(`   ... and ${results.length - 10} more`);
     }
@@ -241,7 +278,8 @@ class TunebookPlayground implements DataLoader {
       return;
     }
 
-    const randomTune = this.tunes[Math.floor(Math.random() * this.tunes.length)];
+    const randomTune =
+      this.tunes[Math.floor(Math.random() * this.tunes.length)];
     console.log('🎲 Random Tune:');
     console.log(`   Name: ${randomTune.name}`);
     console.log(`   Type: ${randomTune.type}`);
@@ -258,7 +296,11 @@ class TunebookPlayground implements DataLoader {
    * List users
    */
   private listUsers(limit: number = 10): void {
-    console.log(`👥 Users (showing ${Math.min(limit, this.users.length)} of ${this.users.length}):`);
+    console.log(
+      `👥 Users (showing ${Math.min(limit, this.users.length)} of ${
+        this.users.length
+      }):`
+    );
     this.users.slice(0, limit).forEach((user, index) => {
       console.log(`   ${index + 1}. ${user.name} (ID: ${user.id})`);
     });
@@ -269,9 +311,17 @@ class TunebookPlayground implements DataLoader {
    * List sessions
    */
   private listSessions(limit: number = 10): void {
-    console.log(`🎭 Sessions (showing ${Math.min(limit, this.sessions.length)} of ${this.sessions.length}):`);
+    console.log(
+      `🎭 Sessions (showing ${Math.min(limit, this.sessions.length)} of ${
+        this.sessions.length
+      }):`
+    );
     this.sessions.slice(0, limit).forEach((session, index) => {
-      console.log(`   ${index + 1}. ${session.name} - ${session.address || 'Location TBD'}`);
+      console.log(
+        `   ${index + 1}. ${session.name} - ${
+          session.address || 'Location TBD'
+        }`
+      );
     });
     console.log();
   }
@@ -282,7 +332,9 @@ class TunebookPlayground implements DataLoader {
   private showHelp(): void {
     console.log('📚 Available Commands:');
     console.log('   stats                    - Show data statistics');
-    console.log('   tunes [type] [limit]     - List tunes, optionally filter by type');
+    console.log(
+      '   tunes [type] [limit]     - List tunes, optionally filter by type'
+    );
     console.log('   search <term>            - Search tunes by name');
     console.log('   random                   - Show a random tune');
     console.log('   users [limit]            - List users');
@@ -292,7 +344,9 @@ class TunebookPlayground implements DataLoader {
     console.log();
     console.log('💡 Examples:');
     console.log('   tunes jig 5              - Show 5 jigs');
-    console.log('   search "blackbird"       - Find tunes with "blackbird" in name');
+    console.log(
+      '   search "blackbird"       - Find tunes with "blackbird" in name'
+    );
     console.log('   users 20                 - Show 20 users');
     console.log();
   }
@@ -303,14 +357,14 @@ class TunebookPlayground implements DataLoader {
  */
 async function main() {
   const playground = new TunebookPlayground();
-  
+
   // Check if we have command line arguments
   const args = process.argv.slice(2);
-  
+
   if (args.length > 0) {
     // Non-interactive mode - execute command and exit
     const command = args[0];
-    
+
     switch (command) {
       case 'stats':
         playground.stats();

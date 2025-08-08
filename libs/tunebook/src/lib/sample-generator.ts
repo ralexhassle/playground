@@ -19,7 +19,9 @@ export const defaultConfig: SampleGeneratorConfig = {
   usersCount: 25,
 };
 
-export function generateSampleData(config: SampleGeneratorConfig = defaultConfig) {
+export function generateSampleData(
+  config: SampleGeneratorConfig = defaultConfig
+) {
   console.log('Sample data generator - configuration:', config);
   // Implementation would go here
   return {

@@ -1,17 +1,17 @@
 /**
  * Data processing utilities for TheSession.org JSON files
- * 
+ *
  * This module provides comprehensive data processing capabilities for transforming
  * raw JSON data from TheSession.org into normalized, structured formats suitable
  * for database storage and advanced analysis.
- * 
+ *
  * ## Key Features:
  * - **Data Normalization**: Converts flat JSON structures into relational data
  * - **Musical Analysis**: Extracts musical features for similarity analysis
  * - **Error Handling**: Robust error tracking and reporting
  * - **Relationship Building**: Links related entities (tunes, sets, recordings)
  * - **Search Optimization**: Generates search vectors for full-text search
- * 
+ *
  * ## Processing Pipeline:
  * 1. Load raw JSON data from multiple sources
  * 2. Extract and normalize core entities (tunes, sets, recordings, sessions)
@@ -19,7 +19,7 @@
  * 4. Generate musical features for analysis
  * 5. Create search indexes
  * 6. Export processed data for database import
- * 
+ *
  * @example
  * ```typescript
  * const processor = new TheSessionDataProcessor();
@@ -28,8 +28,8 @@
  * ```
  */
 
-import { readFileSync, writeFileSync } from "fs";
-import { join } from "path";
+import { readFileSync, writeFileSync } from 'fs';
+import { join } from 'path';
 import {
   Tune,
   TuneSet,
@@ -44,26 +44,26 @@ import {
   ImportStats,
   ImportError,
   MusicalFeatures,
-} from "./types";
+} from './types';
 
 /**
  * Main data processor class for TheSession.org JSON data transformation
- * 
+ *
  * This class orchestrates the complete data processing pipeline from raw JSON
  * to normalized, structured data ready for database import and analysis.
- * 
+ *
  * ## Design Philosophy:
  * - **Defensive Programming**: All operations include error handling
  * - **Memory Efficiency**: Processes data in chunks where possible
  * - **Flexibility**: Handles multiple data directory structures
  * - **Observability**: Comprehensive logging and error reporting
- * 
+ *
  * ## Data Quality:
  * - Validates all numeric conversions
  * - Handles missing or malformed data gracefully
  * - Maintains referential integrity between entities
  * - Provides detailed error reporting for debugging
- * 
+ *
  * @public
  */
 export class TheSessionDataProcessor {
@@ -72,10 +72,10 @@ export class TheSessionDataProcessor {
 
   /**
    * Main processing pipeline - orchestrates the entire data transformation
-   * 
+   *
    * This method coordinates all aspects of data processing from raw JSON files
    * to fully normalized, feature-rich data structures ready for database import.
-   * 
+   *
    * ## Processing Steps:
    * 1. **Data Loading**: Reads JSON files from specified directory
    * 2. **Entity Extraction**: Identifies and normalizes core entities
@@ -83,10 +83,10 @@ export class TheSessionDataProcessor {
    * 4. **Feature Generation**: Extracts musical features for analysis
    * 5. **Search Optimization**: Generates full-text search vectors
    * 6. **Export**: Writes processed data to output files
-   * 
+   *
    * @param dataDir - Directory containing JSON data files
    * @returns Promise resolving to processing statistics and errors
-   * 
+   *
    * @example
    * ```typescript
    * const processor = new TheSessionDataProcessor();
@@ -95,7 +95,7 @@ export class TheSessionDataProcessor {
    * ```
    */
   async processAllData(dataDir: string): Promise<ImportStats> {
-    console.log("Starting TheSession data processing...");
+    console.log('Starting TheSession data processing...');
 
     try {
       // 1. Load raw JSON data
@@ -142,47 +142,49 @@ export class TheSessionDataProcessor {
         errors: this.errors,
       };
     } catch (error) {
-      console.error("Processing failed:", error);
+      console.error('Processing failed:', error);
       throw error;
     }
   }
 
   /**
    * Load all JSON files from the data directory
-   * 
+   *
    * Handles multiple directory structures commonly found in TheSession.org data:
    * - Direct files in the specified directory
    * - Files within a 'json/' subdirectory
-   * 
+   *
    * @param dataDir - Path to directory containing JSON files
    * @returns Object containing all loaded raw data arrays
-   * 
+   *
    * @throws Will throw an error if required files cannot be found or parsed
    */
   private loadRawData(dataDir: string) {
-    console.log("Loading raw JSON data...");
+    console.log('Loading raw JSON data...');
 
     // Try to detect structure: json/ subdirectory or direct files
     const tryPaths = (filename: string) => {
-      const jsonSubdirPath = join(dataDir, "json", filename);
+      const jsonSubdirPath = join(dataDir, 'json', filename);
       const directPath = join(dataDir, filename);
-      
+
       try {
-        return readFileSync(jsonSubdirPath, "utf-8");
+        return readFileSync(jsonSubdirPath, 'utf-8');
       } catch {
-        return readFileSync(directPath, "utf-8");
+        return readFileSync(directPath, 'utf-8');
       }
     };
 
-    const tunes: Tune[] = JSON.parse(tryPaths("tunes.json"));
-    const sets: TuneSet[] = JSON.parse(tryPaths("sets.json"));
-    const recordings: Recording[] = JSON.parse(tryPaths("recordings.json"));
+    const tunes: Tune[] = JSON.parse(tryPaths('tunes.json'));
+    const sets: TuneSet[] = JSON.parse(tryPaths('sets.json'));
+    const recordings: Recording[] = JSON.parse(tryPaths('recordings.json'));
 
-    const sessions: Session[] = JSON.parse(tryPaths("sessions.json"));
+    const sessions: Session[] = JSON.parse(tryPaths('sessions.json'));
 
-    const aliases: TuneAlias[] = JSON.parse(tryPaths("aliases.json"));
+    const aliases: TuneAlias[] = JSON.parse(tryPaths('aliases.json'));
 
-    const popularity: TunePopularity[] = JSON.parse(tryPaths("tune_popularity.json"));
+    const popularity: TunePopularity[] = JSON.parse(
+      tryPaths('tune_popularity.json')
+    );
 
     console.log(
       `Loaded: ${tunes.length} tunes, ${sets.length} set entries, ${recordings.length} recordings`
@@ -193,22 +195,22 @@ export class TheSessionDataProcessor {
 
   /**
    * Extract unique users from tunes and sets data
-   * 
+   *
    * Since TheSession.org data doesn't include a separate users file,
    * this method extracts unique contributor information from tune and set data.
-   * 
+   *
    * @param tunes - Array of tune data
-   * @param sets - Array of set data  
+   * @param sets - Array of set data
    * @returns Array of unique user objects with generated IDs
    */
   private extractUsers(tunes: Tune[], sets: TuneSet[]) {
-    console.log("Extracting users...");
+    console.log('Extracting users...');
 
     const usersMap = new Map<string, { user_id: number; username: string }>();
     let userId = 1;
 
     // Extract from tunes
-    tunes.forEach((tune) => {
+    tunes.forEach(tune => {
       if (tune.username && !usersMap.has(tune.username)) {
         usersMap.set(tune.username, {
           user_id: userId++,
@@ -218,7 +220,7 @@ export class TheSessionDataProcessor {
     });
 
     // Extract from sets
-    sets.forEach((set) => {
+    sets.forEach(set => {
       if (set.username && !usersMap.has(set.username)) {
         usersMap.set(set.username, {
           user_id: userId++,
@@ -234,17 +236,17 @@ export class TheSessionDataProcessor {
 
   /**
    * Normalize and deduplicate tunes, incorporating aliases and popularity
-   * 
+   *
    * Transforms raw tune data into normalized structures that group multiple
    * settings (arrangements) of the same tune together. Each tune can have
    * multiple settings contributed by different users.
-   * 
+   *
    * ## Key Transformations:
    * - Groups settings by tune_id
    * - Incorporates tune aliases from separate alias data
    * - Converts string IDs to integers
    * - Handles date parsing and validation
-   * 
+   *
    * @param rawTunes - Raw tune data from JSON
    * @param aliases - Tune alias data for name variations
    * @returns Array of normalized tune objects with grouped settings
@@ -253,14 +255,14 @@ export class TheSessionDataProcessor {
     rawTunes: Tune[],
     aliases: TuneAlias[]
   ): NormalizedTune[] {
-    console.log("Normalizing tunes...");
+    console.log('Normalizing tunes...');
 
     // Group tunes by tune_id (multiple settings per tune)
     const tunesMap = new Map<string, NormalizedTune>();
     const aliasesMap = new Map<string, string[]>();
 
     // Build aliases map
-    aliases.forEach((alias) => {
+    aliases.forEach(alias => {
       if (!aliasesMap.has(alias.tune_id)) {
         aliasesMap.set(alias.tune_id, []);
       }
@@ -270,7 +272,7 @@ export class TheSessionDataProcessor {
       }
     });
 
-    rawTunes.forEach((tune) => {
+    rawTunes.forEach(tune => {
       try {
         if (!tunesMap.has(tune.tune_id)) {
           // Create new normalized tune
@@ -300,7 +302,7 @@ export class TheSessionDataProcessor {
         }
       } catch (error) {
         this.errors.push({
-          entity_type: "tune",
+          entity_type: 'tune',
           entity_id: tune.tune_id,
           error_message: `Failed to normalize tune: ${error}`,
           raw_data: tune,
@@ -317,7 +319,7 @@ export class TheSessionDataProcessor {
 
   /**
    * Normalize tune sets, grouping by set ID and maintaining order
-   * 
+   *
    * @param rawSets - Raw tune set data from JSON
    * @param users - User data (for potential future use)
    * @returns Array of normalized tune sets
@@ -326,13 +328,13 @@ export class TheSessionDataProcessor {
     rawSets: TuneSet[],
     users: { user_id: number; username: string }[]
   ): NormalizedTuneSet[] {
-    console.log("Normalizing tune sets...");
+    console.log('Normalizing tune sets...');
     // Note: users parameter kept for potential future enhancements
     void users;
 
     const setsMap = new Map<string, NormalizedTuneSet>();
 
-    rawSets.forEach((setEntry) => {
+    rawSets.forEach(setEntry => {
       try {
         if (!setsMap.has(setEntry.tuneset)) {
           // Create new normalized set
@@ -359,7 +361,7 @@ export class TheSessionDataProcessor {
         }
       } catch (error) {
         this.errors.push({
-          entity_type: "set",
+          entity_type: 'set',
           entity_id: setEntry.tuneset,
           error_message: `Failed to normalize set: ${error}`,
           raw_data: setEntry,
@@ -368,7 +370,7 @@ export class TheSessionDataProcessor {
     });
 
     // Sort compositions within each set by position
-    setsMap.forEach((set) => {
+    setsMap.forEach(set => {
       set.compositions.sort((a, b) => a.position_in_set - b.position_in_set);
     });
 
@@ -383,7 +385,7 @@ export class TheSessionDataProcessor {
   private normalizeRecordings(
     rawRecordings: Recording[]
   ): NormalizedRecording[] {
-    console.log("Normalizing recordings...");
+    console.log('Normalizing recordings...');
 
     const recordingsMap = new Map<string, NormalizedRecording>();
     const artistsMap = new Map<
@@ -392,7 +394,7 @@ export class TheSessionDataProcessor {
     >();
     let artistId = 1;
 
-    rawRecordings.forEach((recording) => {
+    rawRecordings.forEach(recording => {
       try {
         // Extract artist info
         if (!artistsMap.has(recording.artist)) {
@@ -422,7 +424,7 @@ export class TheSessionDataProcessor {
 
         // Find or create track
         let track = normalizedRecording.tracks.find(
-          (t) => t.track_number === parseInt(recording.track)
+          t => t.track_number === parseInt(recording.track)
         );
         if (!track) {
           track = {
@@ -444,7 +446,7 @@ export class TheSessionDataProcessor {
         }
       } catch (error) {
         this.errors.push({
-          entity_type: "recording",
+          entity_type: 'recording',
           entity_id: recording.id,
           error_message: `Failed to normalize recording: ${error}`,
           raw_data: recording,
@@ -463,10 +465,10 @@ export class TheSessionDataProcessor {
    * Normalize sessions with geographic data
    */
   private normalizeSessions(rawSessions: Session[]): NormalizedSession[] {
-    console.log("Normalizing sessions...");
+    console.log('Normalizing sessions...');
 
     return rawSessions
-      .map((session) => {
+      .map(session => {
         try {
           return {
             session_id: parseInt(session.id),
@@ -474,7 +476,7 @@ export class TheSessionDataProcessor {
             full_address:
               `${session.address}, ${session.town}, ${session.area}, ${session.country}`.replace(
                 /, ,/g,
-                ","
+                ','
               ),
             location: {
               town: session.town,
@@ -490,7 +492,7 @@ export class TheSessionDataProcessor {
           };
         } catch (error) {
           this.errors.push({
-            entity_type: "session",
+            entity_type: 'session',
             entity_id: session.id,
             error_message: `Failed to normalize session: ${error}`,
             raw_data: session,
@@ -498,26 +500,26 @@ export class TheSessionDataProcessor {
           return null;
         }
       })
-      .filter((session) => session !== null) as NormalizedSession[];
+      .filter(session => session !== null) as NormalizedSession[];
   }
 
   /**
    * Generate musical features for similarity analysis
-   * 
+   *
    * Extracts musical characteristics from ABC notation to enable
    * similarity analysis and recommendation systems. Features include:
    * - Melodic contour analysis
    * - Interval patterns
    * - Rhythmic patterns
    * - Key and time signature detection
-   * 
+   *
    * @param tunes - Array of normalized tunes to process
    * @returns Promise that resolves when all features are generated
    */
   private async generateMusicalFeatures(
     tunes: NormalizedTune[]
   ): Promise<void> {
-    console.log("Generating musical features for similarity analysis...");
+    console.log('Generating musical features for similarity analysis...');
 
     let processed = 0;
     const total = tunes.reduce((sum, tune) => sum + tune.settings.length, 0);
@@ -537,7 +539,7 @@ export class TheSessionDataProcessor {
           }
         } catch (error) {
           this.errors.push({
-            entity_type: "tune",
+            entity_type: 'tune',
             entity_id: tune.tune_id.toString(),
             error_message: `Failed to extract musical features: ${error}`,
             raw_data: setting,
@@ -551,19 +553,19 @@ export class TheSessionDataProcessor {
 
   /**
    * Extract musical features from ABC notation for similarity analysis
-   * 
+   *
    * Parses ABC notation to extract quantifiable musical characteristics
    * that can be used for similarity calculations and music analysis.
-   * 
+   *
    * ## Extracted Features:
    * - **Melodic Contour**: Direction of pitch movement (-1, 0, 1)
    * - **Intervals**: Pitch differences between consecutive notes
    * - **Rhythmic Pattern**: Simplified rhythm representation
    * - **Key/Time Signatures**: Musical structure information
-   * 
+   *
    * @param abcNotation - ABC notation string to analyze
    * @returns Musical features object with quantified characteristics
-   * 
+   *
    * @remarks
    * This is a simplified implementation. Production systems would use
    * specialized music analysis libraries like abcjs or music21.
@@ -577,8 +579,8 @@ export class TheSessionDataProcessor {
     const contour = this.calculateMelodicContour(notes);
 
     return {
-      key_signature: this.extractKeySignature(abcNotation) || "C",
-      time_signature: this.extractTimeSignature(abcNotation) || "4/4",
+      key_signature: this.extractKeySignature(abcNotation) || 'C',
+      time_signature: this.extractTimeSignature(abcNotation) || '4/4',
       note_count: notes.length,
       melodic_contour: contour,
       intervals: intervals,
@@ -592,16 +594,16 @@ export class TheSessionDataProcessor {
   private extractNotesFromABC(abc: string): string[] {
     // Remove ABC headers and keep only the music
     const musicLines = abc
-      .split("\n")
+      .split('\n')
       .filter(
-        (line) =>
-          !line.startsWith("K:") &&
-          !line.startsWith("M:") &&
-          !line.startsWith("L:") &&
+        line =>
+          !line.startsWith('K:') &&
+          !line.startsWith('M:') &&
+          !line.startsWith('L:') &&
           line.trim().length > 0
       );
 
-    const musicString = musicLines.join("");
+    const musicString = musicLines.join('');
 
     // Extract notes (simplified - doesn't handle all ABC features)
     const noteRegex = /[A-Ga-g][',]*[0-9/]*/g;
@@ -681,15 +683,15 @@ export class TheSessionDataProcessor {
   private extractRhythmicPattern(abc: string): string {
     // Simplified rhythmic pattern extraction
     // In production, this would be much more sophisticated
-    return abc.replace(/[A-Ga-g]/g, "X").substring(0, 32);
+    return abc.replace(/[A-Ga-g]/g, 'X').substring(0, 32);
   }
 
   /**
    * Generate search vectors for full-text search
-   * 
+   *
    * Creates searchable text representations for tunes and sessions
    * to enable efficient full-text search capabilities.
-   * 
+   *
    * @param tunes - Normalized tune data
    * @param sessions - Normalized session data
    */
@@ -697,36 +699,38 @@ export class TheSessionDataProcessor {
     tunes: NormalizedTune[],
     sessions: NormalizedSession[]
   ): void {
-    console.log("Generating search vectors...");
+    console.log('Generating search vectors...');
 
     // In a real implementation, this would generate PostgreSQL tsvector data
     // or prepare documents for Elasticsearch indexing
 
-    tunes.forEach((tune) => {
+    tunes.forEach(tune => {
       const searchText = [
         tune.canonical_name,
         ...tune.aliases,
         tune.type,
         tune.mode,
       ]
-        .join(" ")
+        .join(' ')
         .toLowerCase();
 
       // Store search text for later indexing
-      (tune as NormalizedTune & { search_text: string }).search_text = searchText;
+      (tune as NormalizedTune & { search_text: string }).search_text =
+        searchText;
     });
 
-    sessions.forEach((session) => {
+    sessions.forEach(session => {
       const searchText = [
         session.venue_name,
         session.location.town,
         session.location.area,
         session.location.country,
       ]
-        .join(" ")
+        .join(' ')
         .toLowerCase();
 
-      (session as NormalizedSession & { search_text: string }).search_text = searchText;
+      (session as NormalizedSession & { search_text: string }).search_text =
+        searchText;
     });
   }
 
@@ -737,12 +741,12 @@ export class TheSessionDataProcessor {
     sets: NormalizedTuneSet[],
     tunes: NormalizedTune[]
   ): void {
-    console.log("Linking sets to tunes...");
+    console.log('Linking sets to tunes...');
 
-    const tunesMap = new Map(tunes.map((t) => [t.tune_id, t]));
+    const tunesMap = new Map(tunes.map(t => [t.tune_id, t]));
 
-    sets.forEach((set) => {
-      set.compositions.forEach((composition) => {
+    sets.forEach(set => {
+      set.compositions.forEach(composition => {
         const tune = tunesMap.get(composition.tune_id);
         if (tune) {
           // Link is already established through the composition structure
@@ -759,13 +763,13 @@ export class TheSessionDataProcessor {
     recordings: NormalizedRecording[],
     tunes: NormalizedTune[]
   ): void {
-    console.log("Linking recordings to tunes...");
+    console.log('Linking recordings to tunes...');
 
-    const tunesMap = new Map(tunes.map((t) => [t.tune_id, t]));
+    const tunesMap = new Map(tunes.map(t => [t.tune_id, t]));
 
-    recordings.forEach((recording) => {
-      recording.tracks.forEach((track) => {
-        track.tunes.forEach((trackTune) => {
+    recordings.forEach(recording => {
+      recording.tracks.forEach(track => {
+        track.tunes.forEach(trackTune => {
           const tune = tunesMap.get(trackTune.tune_id);
           if (tune) {
             // Link is already established through the track structure
@@ -789,34 +793,34 @@ export class TheSessionDataProcessor {
     },
     outputDir: string
   ): void {
-    console.log("Exporting processed data...");
+    console.log('Exporting processed data...');
 
     writeFileSync(
-      join(outputDir, "processed_tunes.json"),
+      join(outputDir, 'processed_tunes.json'),
       JSON.stringify(data.tunes, null, 2)
     );
 
     writeFileSync(
-      join(outputDir, "processed_sets.json"),
+      join(outputDir, 'processed_sets.json'),
       JSON.stringify(data.sets, null, 2)
     );
 
     writeFileSync(
-      join(outputDir, "processed_recordings.json"),
+      join(outputDir, 'processed_recordings.json'),
       JSON.stringify(data.recordings, null, 2)
     );
 
     writeFileSync(
-      join(outputDir, "processed_sessions.json"),
+      join(outputDir, 'processed_sessions.json'),
       JSON.stringify(data.sessions, null, 2)
     );
 
     writeFileSync(
-      join(outputDir, "processed_users.json"),
+      join(outputDir, 'processed_users.json'),
       JSON.stringify(data.users, null, 2)
     );
 
-    console.log("Data export completed");
+    console.log('Data export completed');
   }
 }
 
@@ -824,8 +828,8 @@ export class TheSessionDataProcessor {
 // Parse command line arguments
 if (import.meta.url === `file://${process.argv[1]}`) {
   const processor = new TheSessionDataProcessor();
-  let dataDir = "./";
-  
+  let dataDir = './';
+
   // Parse arguments
   const args = process.argv.slice(2);
   for (let i = 0; i < args.length; i++) {
@@ -837,13 +841,13 @@ if (import.meta.url === `file://${process.argv[1]}`) {
       dataDir = args[i];
     }
   }
-  
+
   console.log(`Processing data from: ${dataDir}`);
 
   processor
     .processAllData(dataDir)
-    .then((stats) => {
-      console.log("\n=== Processing Complete ===");
+    .then(stats => {
+      console.log('\n=== Processing Complete ===');
       console.log(`Tunes: ${stats.tunes_processed}`);
       console.log(`Sets: ${stats.sets_processed}`);
       console.log(`Recordings: ${stats.recordings_processed}`);
@@ -852,16 +856,16 @@ if (import.meta.url === `file://${process.argv[1]}`) {
       console.log(`Errors: ${stats.errors.length}`);
 
       if (stats.errors.length > 0) {
-        console.log("\nErrors:");
-        stats.errors.slice(0, 10).forEach((error) => {
+        console.log('\nErrors:');
+        stats.errors.slice(0, 10).forEach(error => {
           console.log(
             `- ${error.entity_type} ${error.entity_id}: ${error.error_message}`
           );
         });
       }
     })
-    .catch((error) => {
-      console.error("Processing failed:", error);
+    .catch(error => {
+      console.error('Processing failed:', error);
       process.exit(1);
     });
 }

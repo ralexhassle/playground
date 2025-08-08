@@ -57,9 +57,9 @@ export interface Session {
 }
 
 export interface SessionGeoJSON {
-  type: "Feature";
+  type: 'Feature';
   geometry: {
-    type: "Point";
+    type: 'Point';
     coordinates: [number, number]; // [longitude, latitude]
   };
   properties: {
@@ -86,63 +86,63 @@ export interface TunePopularity {
 // ===== ENUMS AND TYPES =====
 
 export type TuneType =
-  | "reel"
-  | "jig"
-  | "hornpipe"
-  | "slip jig"
-  | "strathspey"
-  | "waltz"
-  | "march"
-  | "polka"
-  | "mazurka"
-  | "slide"
-  | "barndance"
-  | "schottische"
-  | "highland"
-  | "fling"
-  | "air"
-  | "song"
-  | "planxty";
+  | 'reel'
+  | 'jig'
+  | 'hornpipe'
+  | 'slip jig'
+  | 'strathspey'
+  | 'waltz'
+  | 'march'
+  | 'polka'
+  | 'mazurka'
+  | 'slide'
+  | 'barndance'
+  | 'schottische'
+  | 'highland'
+  | 'fling'
+  | 'air'
+  | 'song'
+  | 'planxty';
 
 export type MusicalMode =
-  | "Gmajor"
-  | "Dmajor"
-  | "Amajor"
-  | "Emajor"
-  | "Bmajor"
-  | "F#major"
-  | "C#major"
-  | "Cmajor"
-  | "Fmajor"
-  | "Bbmajor"
-  | "Ebmajor"
-  | "Abmajor"
-  | "Dbmajor"
-  | "Eminor"
-  | "Bminor"
-  | "F#minor"
-  | "C#minor"
-  | "G#minor"
-  | "D#minor"
-  | "A#minor"
-  | "Aminor"
-  | "Dminor"
-  | "Gminor"
-  | "Cminor"
-  | "Fminor"
-  | "Edorian"
-  | "Adorian"
-  | "Bdorian"
-  | "Ddorian"
-  | "Gdorian"
-  | "Cdorian"
-  | "Fdorian"
-  | "Amixolydian"
-  | "Dmixolydian"
-  | "Gmixolydian"
-  | "Cmixolydian"
-  | "Fmixolydian"
-  | "Bbmixolydian";
+  | 'Gmajor'
+  | 'Dmajor'
+  | 'Amajor'
+  | 'Emajor'
+  | 'Bmajor'
+  | 'F#major'
+  | 'C#major'
+  | 'Cmajor'
+  | 'Fmajor'
+  | 'Bbmajor'
+  | 'Ebmajor'
+  | 'Abmajor'
+  | 'Dbmajor'
+  | 'Eminor'
+  | 'Bminor'
+  | 'F#minor'
+  | 'C#minor'
+  | 'G#minor'
+  | 'D#minor'
+  | 'A#minor'
+  | 'Aminor'
+  | 'Dminor'
+  | 'Gminor'
+  | 'Cminor'
+  | 'Fminor'
+  | 'Edorian'
+  | 'Adorian'
+  | 'Bdorian'
+  | 'Ddorian'
+  | 'Gdorian'
+  | 'Cdorian'
+  | 'Fdorian'
+  | 'Amixolydian'
+  | 'Dmixolydian'
+  | 'Gmixolydian'
+  | 'Cmixolydian'
+  | 'Fmixolydian'
+  | 'Bbmixolydian';
 
 // ===== PROCESSED/NORMALIZED ENTITIES =====
 
@@ -291,7 +291,7 @@ export interface SimilarTune {
   tune_id: number;
   name: string;
   similarity_score: number;
-  similarity_type: "melodic" | "harmonic" | "rhythmic" | "composite";
+  similarity_type: 'melodic' | 'harmonic' | 'rhythmic' | 'composite';
 }
 
 export interface RecordingReference {
@@ -321,8 +321,8 @@ export interface SessionReference {
 
 export interface ProcessingJob {
   job_id: string;
-  job_type: "import" | "similarity_calculation" | "search_index_rebuild";
-  status: "pending" | "running" | "completed" | "failed";
+  job_type: 'import' | 'similarity_calculation' | 'search_index_rebuild';
+  status: 'pending' | 'running' | 'completed' | 'failed';
   progress_percentage: number;
   created_at: Date;
   completed_at?: Date;
@@ -340,7 +340,7 @@ export interface ImportStats {
 }
 
 export interface ImportError {
-  entity_type: "tune" | "set" | "recording" | "session" | "alias";
+  entity_type: 'tune' | 'set' | 'recording' | 'session' | 'alias';
   entity_id: string;
   error_message: string;
   raw_data?: any;

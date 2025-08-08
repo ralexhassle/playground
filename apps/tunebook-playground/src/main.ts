@@ -12,8 +12,10 @@ import type {
   TuneSet,
   Recording,
   Session,
-  User,
-} from '@monorepo/tunebook';
+  TuneAlias,
+  TunePopularity,
+} from '@tunebook/core';
+import { generateSampleData, defaultConfig } from '@tunebook/core';
 
 // Get the current directory
 const __filename = fileURLToPath(import.meta.url);
@@ -27,7 +29,8 @@ interface DataLoader {
   loadSets(): TuneSet[];
   loadRecordings(): Recording[];
   loadSessions(): Session[];
-  loadUsers(): User[];
+  loadAliases(): TuneAlias[];
+  loadPopularity(): TunePopularity[];
   stats(): void;
 }
 
@@ -40,7 +43,8 @@ class TunebookPlayground implements DataLoader {
   private sets: TuneSet[] = [];
   private recordings: Recording[] = [];
   private sessions: Session[] = [];
-  private users: User[] = [];
+  private aliases: TuneAlias[] = [];
+  private popularity: TunePopularity[] = [];
 
   constructor() {
     this.dataDir = resolve(__dirname, '../data');
@@ -59,10 +63,22 @@ class TunebookPlayground implements DataLoader {
     this.sets = this.loadJsonFile('sets.json', []);
     this.recordings = this.loadJsonFile('recordings.json', []);
     this.sessions = this.loadJsonFile('sessions.json', []);
-    this.users = this.loadJsonFile('users.json', []);
+    this.aliases = this.loadJsonFile('aliases.json', []);
+    this.popularity = this.loadJsonFile('tune_popularity.json', []);
+
+    // If no real data was found, generate sample data
+    if (this.tunes.length === 0 && this.sets.length === 0 && this.recordings.length === 0) {
+      console.log('   ℹ️  No data files found, generating sample data...');
+      const sampleData = generateSampleData(defaultConfig);
+      this.tunes = sampleData.tunes;
+      this.sets = sampleData.sets;
+      this.recordings = sampleData.recordings;
+      this.sessions = sampleData.sessions;
+      this.aliases = sampleData.aliases;
+      this.popularity = sampleData.popularity;
+    }
 
     console.log('✅ Data loaded successfully!\n');
-    this.stats();
   }
 
   /**
@@ -106,8 +122,11 @@ class TunebookPlayground implements DataLoader {
   loadSessions(): Session[] {
     return this.sessions;
   }
-  loadUsers(): User[] {
-    return this.users;
+  loadAliases(): TuneAlias[] {
+    return this.aliases;
+  }
+  loadPopularity(): TunePopularity[] {
+    return this.popularity;
   }
 
   /**
@@ -119,7 +138,8 @@ class TunebookPlayground implements DataLoader {
     console.log(`   Tune Sets: ${this.sets.length.toLocaleString()}`);
     console.log(`   Recordings: ${this.recordings.length.toLocaleString()}`);
     console.log(`   Sessions: ${this.sessions.length.toLocaleString()}`);
-    console.log(`   Users: ${this.users.length.toLocaleString()}\n`);
+    console.log(`   Aliases: ${this.aliases.length.toLocaleString()}`);
+    console.log(`   Popularity: ${this.popularity.length.toLocaleString()}\n`);
   }
 
   /**
@@ -136,7 +156,6 @@ class TunebookPlayground implements DataLoader {
     console.log('   tunes [type]   - List tunes (optionally filter by type)');
     console.log('   search [term]  - Search tunes by name');
     console.log('   random         - Show a random tune');
-    console.log('   users [limit]  - List users');
     console.log('   sessions       - List sessions');
     console.log('   help           - Show this help');
     console.log('   exit           - Exit playground\n');
@@ -175,10 +194,6 @@ class TunebookPlayground implements DataLoader {
 
       case 'random':
         this.showRandomTune();
-        break;
-
-      case 'users':
-        this.listUsers(parseInt(args[0]) || 10);
         break;
 
       case 'sessions':
@@ -293,21 +308,6 @@ class TunebookPlayground implements DataLoader {
   }
 
   /**
-   * List users
-   */
-  private listUsers(limit: number = 10): void {
-    console.log(
-      `👥 Users (showing ${Math.min(limit, this.users.length)} of ${
-        this.users.length
-      }):`
-    );
-    this.users.slice(0, limit).forEach((user, index) => {
-      console.log(`   ${index + 1}. ${user.name} (ID: ${user.id})`);
-    });
-    console.log();
-  }
-
-  /**
    * List sessions
    */
   private listSessions(limit: number = 10): void {
@@ -337,7 +337,6 @@ class TunebookPlayground implements DataLoader {
     );
     console.log('   search <term>            - Search tunes by name');
     console.log('   random                   - Show a random tune');
-    console.log('   users [limit]            - List users');
     console.log('   sessions [limit]         - List sessions');
     console.log('   help                     - Show this help');
     console.log('   exit                     - Exit playground');
@@ -347,7 +346,6 @@ class TunebookPlayground implements DataLoader {
     console.log(
       '   search "blackbird"       - Find tunes with "blackbird" in name'
     );
-    console.log('   users 20                 - Show 20 users');
     console.log();
   }
 }

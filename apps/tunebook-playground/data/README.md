@@ -8,11 +8,12 @@ Download the data files from: https://github.com/adactio/TheSession-data/tree/ma
 
 The following files are expected:
 
-- `recordings.json` - Recording information
+- `aliases.json` - Alternative names and aliases for tunes
+- `recordings.json` - Recording information and discography
 - `sessions.json` - Session data with geographic information
 - `sets.json` - Tune sets data
 - `tunes.json` - Individual tunes with ABC notation
-- `users.json` - User/member data
+- `tune_popularity.json` - Popularity metrics and statistics
 
 These files are **not versioned** due to their large size (several MB each).
 

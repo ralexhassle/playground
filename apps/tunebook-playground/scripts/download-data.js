@@ -1,19 +1,25 @@
 #!/usr/bin/env node
 
-const https = require('https');
-const fs = require('fs');
-const path = require('path');
+import https from 'https';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const DATA_DIR = path.resolve(__dirname, '../data');
 const BASE_URL =
   'https://raw.githubusercontent.com/adactio/TheSession-data/main/json';
 
 const FILES = [
+  'aliases.json',
   'recordings.json',
   'sessions.json',
   'sets.json',
   'tunes.json',
-  'users.json',
+  'tune_popularity.json',
 ];
 
 /**
@@ -102,8 +108,8 @@ async function downloadData() {
 }
 
 // Check if this script is being run directly
-if (require.main === module) {
+if (import.meta.url === `file://${process.argv[1]}`) {
   downloadData().catch(console.error);
 }
 
-module.exports = { downloadData };
+export { downloadData };

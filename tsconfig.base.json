@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@/types": ["dist/libs/types"]
+      "@/types": ["dist/libs/types"],
+      "@monorepo/tunebook": ["libs/tunebook/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

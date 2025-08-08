@@ -1,0 +1,21 @@
+{
+  "name": "tunebook-playground",
+  "version": "1.0.0",
+  "description": "Interactive playground for exploring TheSession.org data",
+  "type": "module",
+  "main": "src/main.ts",
+  "scripts": {
+    "start": "tsx src/main.ts",
+    "dev": "tsx src/main.ts",
+    "build": "tsc",
+    "download-data": "node scripts/download-data.js",
+    "stats": "tsx src/main.ts stats"
+  },
+  "dependencies": {
+    "@monorepo/tunebook": "*"
+  },
+  "devDependencies": {
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  }
+}

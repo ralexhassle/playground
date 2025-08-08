@@ -51,4 +51,7 @@ vite.config.*.timestamp*
 
 # Tunebook data files (too large for git)
 tunebook/processed_*.json
+
+# Tunebook playground data directory (large JSON files from external source)
+apps/tunebook-playground/data/*.json
 vitest.config.*.timestamp*
